@@ -1,0 +1,1 @@
+b2ec43fca1a9881596d9d60d7d895a001171f4b23b09f317e305651ac074a4d8  swapnftstemplate.wasm
