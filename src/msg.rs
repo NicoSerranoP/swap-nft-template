@@ -16,5 +16,18 @@ pub enum ExecuteMsg {
 
 #[cw_serde]
 pub struct InnerMsg {
-    pub new_collection_addr: Addr
+    pub new_collection_addr: Addr,
+    pub merkle_proof: Option<Vec<Vec<u8>>>,
+}
+
+
+#[cw_serde]
+pub enum ExecuteLighthouseMsg {
+    MintNative {
+        collection: String,
+        group: String,
+        recipient: Option<Addr>,
+        merkle_proof: Option<Vec<Vec<u8>>>,
+        hashed_address: Option<Vec<u8>>,
+    }
 }
