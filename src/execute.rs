@@ -12,9 +12,9 @@ pub fn receive_nft(info: MessageInfo, receive_msg: Cw721ReceiveMsg) -> Result<Re
     let inner_msg: InnerMsg = from_json(&receive_msg.msg)?;
     let new_collection_addr = inner_msg.new_collection_addr;
 
-    let _old_collection_addr = info.sender.as_str();
+    let old_collection_env_addr = info.sender.as_str();
     let old_collection_addr = Addr::unchecked("sei1exm3fjundhdzf6wng3xcny4nhjlawwmztxd286f35zcvx4mav4jqcnese6");
-    if old_collection_addr != _old_collection_addr {
+    if old_collection_addr != old_collection_env_addr {
         return Err(ContractError::Unauthorized {});
     }
 
@@ -36,7 +36,7 @@ pub fn receive_nft(info: MessageInfo, receive_msg: Cw721ReceiveMsg) -> Result<Re
         response
             .add_attribute("action", "burn_to_mint")
             .add_attribute("old_collection", old_collection_addr.to_string())
-            .add_attribute("_old_collection", _old_collection_addr.to_string())
+            .add_attribute("old_collection_env", old_collection_env_addr.to_string())
             .add_attribute("new_collection", new_collection_addr.to_string())
             .add_attribute("recipient", recipient.to_string())
             .add_attribute("token_id", token_id.to_string())

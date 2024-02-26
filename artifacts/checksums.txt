@@ -1,1 +1,1 @@
-c2bc3c3d5822be1d8f03699ef3dbfa8538626a88343eb3c019188c8f9eb07bfe  swapnftstemplate.wasm
+0193293a76c1d18f4293fd7e887a2edf82530a9d8986f3b2b7b421be481d912c  swapnftstemplate.wasm
