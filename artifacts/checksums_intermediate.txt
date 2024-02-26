@@ -1,1 +1,1 @@
-a0874435617c9682413485ef0f9898a1b7c1485db2f7c5ef2a11b65f59378faf  /target/wasm32-unknown-unknown/release/swapnftstemplate.wasm
+f27ba32f300ddf31772c772308ff72c2c78c32420126aee5f41d2d0faf274140  /target/wasm32-unknown-unknown/release/swapnftstemplate.wasm
