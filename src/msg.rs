@@ -16,8 +16,7 @@ pub enum ExecuteMsg {
 
 #[cw_serde]
 pub struct InnerMsg {
-    pub new_collection_addr: Addr,
-    pub merkle_proof: Option<Vec<Vec<u8>>>,
+    pub new_collection_addr: Addr
 }
 
 

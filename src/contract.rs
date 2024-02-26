@@ -29,11 +29,11 @@ pub fn instantiate(
 pub fn execute(
     _deps: DepsMut,
     _env: Env,
-    _info: MessageInfo,
+    info: MessageInfo,
     msg: ExecuteMsg,
 ) -> Result<Response, ContractError> {
     match msg {
-        ExecuteMsg::ReceiveNft(receive_msg) => receive_nft(receive_msg),
+        ExecuteMsg::ReceiveNft(receive_msg) => receive_nft(info, receive_msg),
     }
 }
 
