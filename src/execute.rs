@@ -1,7 +1,7 @@
 use std::marker::PhantomData;
 use cosmwasm_std::{from_json, Addr, Empty, MessageInfo, Response};
 use cw721::Cw721ReceiveMsg;
-use cw2981_royalties::ExecuteMsg as Cw2981ExecuteMsg;
+use cw721_base::msg::ExecuteMsg as Cw721ExecuteMsg;
 use cw721_base::helpers::Cw721Contract;
 
 use crate::{msg::InnerMsg, ContractError};
@@ -18,17 +18,24 @@ pub fn receive_nft(info: MessageInfo, receive_msg: Cw721ReceiveMsg) -> Result<Re
         return Err(ContractError::Unauthorized {});
     }
 
+    let burn_msg: cw721_base::ExecuteMsg<Empty, Empty> = Cw721ExecuteMsg::Burn {
+        token_id: token_id.to_string()
+    };
     Cw721Contract::<Empty, Empty>(
         old_collection_addr.clone(),
         PhantomData,
         PhantomData
-    ).call(Cw2981ExecuteMsg::Burn { token_id: token_id.to_string() }).unwrap();
+    ).call(burn_msg).unwrap();
 
+    let mint_msg: cw721_base::ExecuteMsg<Empty, Empty> = Cw721ExecuteMsg::TransferNft {
+        recipient: recipient.to_string(),
+        token_id: token_id.to_string() as String
+    };
     Cw721Contract::<Empty, Empty>(
         new_collection_addr.clone(),
         PhantomData,
         PhantomData
-    ).call(Cw2981ExecuteMsg::TransferNft { recipient: recipient.to_string(), token_id: token_id.to_string() }).unwrap();
+    ).call(mint_msg).unwrap();
 
     let response = Response::new();
     // Return the response
