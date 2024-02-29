@@ -21,26 +21,28 @@ pub fn receive_nft(info: MessageInfo, receive_msg: Cw721ReceiveMsg) -> Result<Re
     let burn_msg: cw721_base::ExecuteMsg<Empty, Empty> = Cw721ExecuteMsg::Burn {
         token_id: token_id.to_string()
     };
-    Cw721Contract::<Empty, Empty>(
+    let burn_callback = Cw721Contract::<Empty, Empty>(
         old_collection_addr.clone(),
         PhantomData,
         PhantomData
-    ).call(burn_msg).unwrap();
+    ).call(burn_msg)?;
 
     let mint_msg: cw721_base::ExecuteMsg<Empty, Empty> = Cw721ExecuteMsg::TransferNft {
         recipient: recipient.to_string(),
         token_id: token_id.to_string() as String
     };
-    Cw721Contract::<Empty, Empty>(
+    let mint_callback = Cw721Contract::<Empty, Empty>(
         new_collection_addr.clone(),
         PhantomData,
         PhantomData
-    ).call(mint_msg).unwrap();
+    ).call(mint_msg)?;
 
     let response = Response::new();
     // Return the response
     Ok(
         response
+            .add_message(burn_callback)
+            .add_message(mint_callback)
             .add_attribute("action", "burn_to_mint")
             .add_attribute("old_collection", old_collection_addr.to_string())
             .add_attribute("old_collection_env", old_collection_env_addr.to_string())
